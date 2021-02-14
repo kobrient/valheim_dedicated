@@ -1,0 +1,5 @@
+#This directory will be volumed in by docker and the steam user inside the container will read/write player and data files in here
+#Ignore everything so git doesn't pick up game files
+
+*
+!.gitignore
