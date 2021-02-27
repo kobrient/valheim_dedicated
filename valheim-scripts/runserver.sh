@@ -10,8 +10,11 @@ installdir=/home/steam/$game
 #Script vars
 server_pid=-1
 timeout=30
+server_pidfile="${game}_server.pid"
 stdout_logfile="${game}_stdout.log"
 stderr_logfile="${game}_stderr.log"
+
+server_executable="valheim_server.x86_64"
 
 #Space separated
 dependencies="libsqlite3-dev "
@@ -19,7 +22,6 @@ dependencies="libsqlite3-dev "
 export templdpath=$LD_LIBRARY_PATH
 #Game executable will be looking for this:
 export SteamAppId=892970
-
 
 main() {
     dependencies
@@ -64,17 +66,16 @@ shutdown() {
 }
 
 run_server() {
-    if [ -f "valheim_server.x86_64" ]; then
-    
+    if [ -f $server_executable ]; then
         export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
         echo "Starting server PRESS CTRL-C to exit"
-        ./valheim_server.x86_64 -nographics -batchmode -name "MyServer" -port 2456 -world "Worldname" -password "secret" > $stdout_logfile 2> $stderr_logfile &
+        ./$server_executable -nographics -batchmode -name "MyServer" -port 2456 -world "Worldname" -password "secret" > $stdout_logfile 2> $stderr_logfile &
         server_pid=$!
         export LD_LIBRARY_PATH=$templdpath
-        echo $server_pid > valheim_server.pid
+        echo $server_pid > $server_pidfile
         wait $server_pid
     else
-        echo "ERROR: valheim_server.x86_64 not found"
+        echo "ERROR: $server_executable not found"
         exit 1
     fi
 }
