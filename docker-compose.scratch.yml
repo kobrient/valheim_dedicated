@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  valheim-dedicated-scratch:
+    working_dir: /home/steam/
+    build:
+      context: .
+      dockerfile: Dockerfile.scratch
+    ports:
+      - "2456:2456/udp"
+      - "2457:2457/udp"
+      - "2458:2458/udp"
+    volumes:
+      - "./valheim-data:/home/steam/valheim/"
+      - "./valheim-scripts:/home/steam/valheim-scripts/"
+      - "./Valheim:/root/.config/unity3d/IronGate/Valheim/"
+    stdin_open: true
+    tty: true

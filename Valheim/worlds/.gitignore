@@ -1,3 +1,4 @@
 *.db
+*.db.old
 *.fwl
 *.fwl.old
