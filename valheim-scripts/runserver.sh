@@ -11,9 +11,14 @@ installdir=/home/steam/$game
 server_pid=-1
 timeout=30
 server_pidfile="${game}_server.pid"
+use_logfiles=false
 stdout_logfile="${game}_stdout.log"
 stderr_logfile="${game}_stderr.log"
 
+#Server specific vars
+server_name="MyServer"
+server_world="Worldname"
+server_password="secret"
 server_executable="valheim_server.x86_64"
 
 #Space separated
@@ -69,7 +74,11 @@ run_server() {
     if [ -f $server_executable ]; then
         export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
         echo "Starting server PRESS CTRL-C to exit"
-        ./$server_executable -nographics -batchmode -name "MyServer" -port 2456 -world "Worldname" -password "secret" > $stdout_logfile 2> $stderr_logfile &
+        if [ "$use_logfiles" = true ] ; then
+            ./$server_executable -nographics -batchmode -name "$server_name" -port 2456 -world "$server_world" -password "$server_password" > $stdout_logfile 2> $stderr_logfile &
+        else
+            ./$server_executable -nographics -batchmode -name "$server_name" -port 2456 -world "$server_world" -password "$server_password"
+        fi
         server_pid=$!
         export LD_LIBRARY_PATH=$templdpath
         echo $server_pid > $server_pidfile
