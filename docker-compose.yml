@@ -10,6 +10,7 @@ services:
       - "2457:2457/udp"
       - "2458:2458/udp"
     volumes:
+      - "/etc/localtime:/etc/localtime:ro"
       - "./valheim-data:/home/steam/valheim/"
       - "./valheim-scripts:/home/steam/valheim-scripts/"
       - "./Valheim:/home/steam/.config/unity3d/IronGate/Valheim/"

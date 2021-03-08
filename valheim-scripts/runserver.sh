@@ -77,7 +77,7 @@ run_server() {
         if [ "$use_logfiles" = true ] ; then
             ./$server_executable -nographics -batchmode -name "$server_name" -port 2456 -world "$server_world" -password "$server_password" > $stdout_logfile 2> $stderr_logfile &
         else
-            ./$server_executable -nographics -batchmode -name "$server_name" -port 2456 -world "$server_world" -password "$server_password"
+            ./$server_executable -nographics -batchmode -name "$server_name" -port 2456 -world "$server_world" -password "$server_password" &
         fi
         server_pid=$!
         export LD_LIBRARY_PATH=$templdpath
